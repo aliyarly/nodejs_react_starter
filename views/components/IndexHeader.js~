@@ -1,0 +1,15 @@
+'use strict';
+import React from 'react';
+import TopPaneNav from '../components/TopPaneNav';
+
+const IndexHeader = React.createClass({
+    render: function () {
+        return (
+            <div id="autotest_header">
+                <TopPaneNav/>
+            </div>
+        )
+    }
+});
+
+export default IndexHeader;

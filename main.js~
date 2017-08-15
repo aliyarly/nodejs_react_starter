@@ -1,0 +1,51 @@
+const {app, BrowserWindow,ipcMain,dialog} = require('electron');
+let mainWindow = null;
+let reportWindow = null;
+let editWindow = null;
+app.on('window-all-closed', function () {
+    if (process.platform != 'darwin') {
+        app.quit();
+    }
+});
+app.on('ready', function () {
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600
+    });
+    mainWindow.loadURL('file://' + __dirname + '/contents/index.html');
+    mainWindow.openDevTools();
+    mainWindow.on('closed', function () {
+        mainWindow = null;
+    });
+});
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+};
+
+ipcMain.on('editCase', function(event, arg) {
+    var _arg = arg[arg.length-1]
+    if(!endsWith(_arg,"test_stress")){
+            editWindow = new BrowserWindow({
+            width:800,
+            height:600
+        });
+        editWindow.loadURL('file://' + __dirname + '/contents/edit.html');
+        editWindow.webContents.on('did-finish-load', function() {
+        editWindow.webContents.send('edit', _arg);
+        });
+    } else{
+         editWindow = new BrowserWindow({
+            width:800,
+            height:600
+        });
+        editWindow.loadURL('file://' + __dirname + '/contents/stress.html');
+        editWindow.webContents.on('did-finish-load', function() {
+        editWindow.webContents.send('edit-stress', _arg);
+        });
+    }
+
+    editWindow.on('closed',function(){
+        mainWindow.webContents.send('selectClean');
+        editWindow = null;
+    });
+});

@@ -1,0 +1,15 @@
+'use strict';
+import React from 'react';
+import MainPane from '../components/MainPane';
+
+const IndexBody = React.createClass({
+    render: function () {
+        return (
+        <div id="autotest_left_page_body">
+            <MainPane/>
+        </div>
+        )
+    }
+});
+
+export default IndexBody;

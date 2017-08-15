@@ -1,0 +1,14 @@
+'use strict';
+import React from 'react';
+import AmtRecord from '../components/AmtRecord'
+
+const RightPage = React.createClass({
+     render: function () {
+         return (
+                <div className="right_page" style={{width:"100%",height:'876px'}}>
+                    <AmtRecord /> 
+                </div>
+                )  
+     }
+})
+export default RightPage;
